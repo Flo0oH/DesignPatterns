@@ -10,7 +10,7 @@ namespace Singleton2
     {
         public void Methode_A()
         {
-            Console.WriteLine("\tThis is Method_A from Implementor_A");
+            Console.WriteLine("\tThis is Method_A from Implementor_B");
         }
 
         public void Methode_B()

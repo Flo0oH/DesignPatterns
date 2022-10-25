@@ -1,13 +1,8 @@
 ﻿namespace Singleton2
 {
-    internal class Singelton
+    class Singelton
     {
-        public Singelton()
-        {
-
-        }
-
-        internal void start()
+        public void startasingletonexample()
         {
             UserContext myContext = UserContext.instance;
             Console.WriteLine(myContext == UserContext.instance);

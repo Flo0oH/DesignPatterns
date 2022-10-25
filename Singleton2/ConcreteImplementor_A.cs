@@ -11,7 +11,7 @@
 
         public void Methode_B()
         {
-            Console.WriteLine("\tThis is Method_B from Implementor_B");
+            Console.WriteLine("\tThis is Method_B from Implementor_A");
         }
     }
 }
