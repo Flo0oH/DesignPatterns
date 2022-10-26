@@ -1,9 +1,36 @@
-﻿namespace Singleton2
+﻿using System;
+using System.Reflection;
+using System.Resources;
+namespace Singleton2
 {
     internal class Program
     {
+        public static TxtStrategy saveStrategy { get; private set; }
+
         static void Main(string[] args)
         {
+            //Einbindung Externer Ressourcen für z.B. Sprachumschaltung
+            
+            ResourceManager rm = new ResourceManager("Singleton2.Resources.Strings",
+                    Assembly.GetExecutingAssembly());
+            Console.WriteLine(Thread.CurrentThread.CurrentUICulture.Name);
+            Console.WriteLine(rm.GetString("Welcome"));
+            Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("de-AT");
+            Console.WriteLine(Thread.CurrentThread.CurrentUICulture.Name);
+            Console.WriteLine(rm.GetString("Welcome"));
+            Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("jp");
+            Console.WriteLine(Thread.CurrentThread.CurrentUICulture.Name);
+            Console.WriteLine(rm.GetString("Welcome"));
+            Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("de-DE");
+            Console.WriteLine(Thread.CurrentThread.CurrentUICulture.Name);
+            Console.WriteLine(rm.GetString("Welcome"));
+            Console.ReadLine();
+
+
+
+                
+            
+            
             Console.WriteLine("Hier ein Beispiel für ein Singelton Pattern");
             //tryout a singleton pattern
             Singelton mysingelton = new Singelton();
@@ -119,8 +146,54 @@
 
             //Facade
             Facade.CreateFile();
+            var myfile = "myfile.sql";
+            var myExtension = Path.GetExtension(myfile);
 
-            
+            //Strategy Pattern
+            switch (myExtension.ToLower())
+            {
+                case ".txt":
+                    saveStrategy = new TxtStrategy();
+                    break;
+                case ".sql":
+                    saveStrategy = new SqlStrategy();
+                    break;
+                default:
+                    throw new Exception(myExtension);   
+            }
+
+
+            //Strategy Pattern start
+            Console.WriteLine("Start with Strategy Pattern start");
+            Context context = new Context();
+            //Client ist das Programm.cs klasse Hier -
+            context.MoveUp();
+            context.MoveDown();
+            context.MoveLeft();
+            context.MoveRight();
+            Console.WriteLine("Changing State");
+            context.ChangeState(PossibleStates.StateRightLeft);
+            context.MoveUp();
+            context.MoveDown();
+            context.MoveLeft();
+            context.MoveRight();
+            Console.WriteLine("End with Strategy Pattern start");
+            Console.ReadLine();
+
+
+
+
+            Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("de-AT");
+            Console.WriteLine(Thread.CurrentThread.CurrentUICulture.Name);
+            Console.WriteLine(rm.GetString("Goodbye"));
+
+            Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("de-DE");
+            Console.WriteLine(Thread.CurrentThread.CurrentUICulture.Name);
+            Console.WriteLine(rm.GetString("Goodbye"));
+
+            Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.CreateSpecificCulture("jp");
+            Console.WriteLine(Thread.CurrentThread.CurrentUICulture.Name);
+            Console.WriteLine(rm.GetString("Goodbye"));
 
 
         }
